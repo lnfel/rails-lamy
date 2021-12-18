@@ -30,7 +30,7 @@ Set link[1]=https://github.com/oneclick/rubyinstaller2/releases/download/RubyIns
 Set filename[1]=rubyinstaller-devkit-3.0.3-1-x64.exe
 Set dir[1]=C:\Ruby30-x64\
 Set bin[1]=bin\
-Set extract[1]="%downloads_path%%filename[1]%" /silent /tasks='assocfiles,modpath'
+Set extract[1]="%downloads_path%%filename[1]%" /verysilent /tasks='assocfiles,modpath'
 Set app[1]=ruby.exe
 Set method[1]=Installing
 
@@ -72,6 +72,13 @@ for /L %%i in (0,1,3) do (
 		echo [32mInstalled[0m !item[%%i]!
 	)
 )
+
+:: Setup MYSYS2 (Required for Ruby Devkit)
+::call ridk install
+::call ridk enable
+::echo [32mEnabled[0m environment variables for MSYS2
+call ridk exec pacman -S --needed --noconfirm autoconf autogen automake-wrapper diffutils file gawk grep libtool m4 make patch sed texinfo texinfo-tex wget mingw-w64-x86_64-binutils mingw-w64-x86_64-crt-git mingw-w64-x86_64-gcc mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-headers-git mingw-w64-x86_64-libmangle-git mingw-w64-x86_64-libwinpthread-git mingw-w64-x86_64-make mingw-w64-x86_64-tools-git mingw-w64-x86_64-winpthreads-git pkgconf mingw-w64-x86_64-pkgconf
+echo [32mInstalled[0m MSYS2 and MINGW development toolchain
 
 :: Install npm packages
 call npm install --global yarn
